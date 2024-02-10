@@ -18,3 +18,7 @@ WORKDIR /usr/local/tomcat/webapps
 
 # Copy the built artifact from the Maven image
 COPY --from=build /home/ec2-user/webapp/target/webapp.war .
+
+EXPOSE 8080
+
+CMD ["catalina.sh", "run"]
