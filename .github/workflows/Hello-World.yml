@@ -17,5 +17,5 @@ jobs:
       uses: docker/setup-buildx-action@v1
 
     - name: Build Docker image
-      run: docker build . -t DeepakRamanan10/Valaxy-Technologies:latest
+      run: docker build . -t deepakramanan10/valaxy-technologies:latest
       working-directory: /
