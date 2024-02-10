@@ -28,7 +28,7 @@ jobs:
         aws-region: ap-south-1
 
     - name: Login to Amazon ECR
-      run: aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 471112778737.dkr.ecr.<your-region>.amazonaws.com
+      run: aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 471112778737.dkr.ecr.ap-south-1.amazonaws.com
 
     - name: Push Docker image to Amazon ECR
       run: docker push 471112778737.dkr.ecr.ap-south-1.amazonaws.com/valaxy-technologies:latest
