@@ -18,4 +18,4 @@ jobs:
 
     - name: Build Docker image
       run: docker build . -t deepakramanan10/valaxy-technologies:latest
-      working-directory: .github/workflows
+      working-directory: ./
