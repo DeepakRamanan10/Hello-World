@@ -20,7 +20,7 @@ spec:
             - containerPort: 8080
       imagePullSecrets:
         - name: ecr-secret
----
+----
 apiVersion: v1
 kind: Service
 metadata:
