@@ -42,3 +42,14 @@ jobs:
       env:
         TIMESTAMP: $(date +%Y%m%d%H%M%S) # Use the same timestamp for tagging
       run: docker push 471112778737.dkr.ecr.ap-south-1.amazonaws.com/my_repository:${{ env.TIMESTAMP }}
+
+    - name: Replace timestamp in deployment file
+      run: sed -i "s|471112778737\.dkr\.ecr\.ap-south-1\.amazonaws\.com/my_repository:latest|471112778737\.dkr\.ecr\.ap-south-1\.amazonaws\.com/my_repository:${{ steps.build_docker_image.outputs.timestamp }}|" deployment.yaml
+
+    - name: Commit changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add deployment.yaml
+        git commit -m "Update deployment with latest image tag"
+        git push
