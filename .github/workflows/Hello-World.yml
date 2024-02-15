@@ -20,7 +20,7 @@ jobs:
       env:
         TIMESTAMP: $(date +%Y%m%d%H%M%S) # Generate timestamp
       run: |
-        docker build . -t ecr_user/my_repository:$TIMESTAMP
+        docker build -t ecr_user/my_repository:$TIMESTAMP .
         echo "::set-output name=image_tag::ecr_user/my_repository:$TIMESTAMP"
 
     - name: Configure AWS credentials
