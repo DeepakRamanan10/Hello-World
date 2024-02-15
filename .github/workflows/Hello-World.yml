@@ -17,9 +17,11 @@ jobs:
       uses: docker/setup-buildx-action@v1
 
     - name: Build Docker image
+      env:
+        TIMESTAMP: $(date +%Y%m%d%H%M%S) # Generate timestamp
       run: |
-        docker build . -t ecr_user/my_repository:latest
-        echo "::set-output name=image_tag::ecr_user/my_repository:latest"
+        docker build . -t ecr_user/my_repository:$TIMESTAMP
+        echo "::set-output name=image_tag::ecr_user/my_repository:$TIMESTAMP"
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v2
@@ -32,7 +34,9 @@ jobs:
       run: aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 471112778737.dkr.ecr.ap-south-1.amazonaws.com
 
     - name: Tag Docker image
-      run: docker tag ecr_user/my_repository:latest 471112778737.dkr.ecr.ap-south-1.amazonaws.com/my_repository:latest
+      env:
+        TIMESTAMP: $(date +%Y%m%d%H%M%S) # Use the same timestamp for tagging
+      run: docker tag ecr_user/my_repository:$TIMESTAMP 471112778737.dkr.ecr.ap-south-1.amazonaws.com/my_repository:$TIMESTAMP
     
     - name: Push Docker image to Amazon ECR
-      run: docker push 471112778737.dkr.ecr.ap-south-1.amazonaws.com/my_repository:latest
+      run: docker push 471112778737.dkr.ecr.ap-south-1.amazonaws.com/my_repository:$TIMESTAMP
