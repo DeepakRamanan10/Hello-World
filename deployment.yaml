@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: your-app
-          image: <your-ecr-url>/<your-image>:<tag>
+          image: 471112778737.dkr.ecr.ap-south-1.amazonaws.com/my_repository/my_repository:latest
           ports:
             - containerPort: 80
