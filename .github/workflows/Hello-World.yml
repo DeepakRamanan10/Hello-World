@@ -39,4 +39,4 @@ jobs:
       run: docker tag ecr_user/my_repository:latest 471112778737.dkr.ecr.ap-south-1.amazonaws.com/my_repository:${{ env.TIMESTAMP }}
     
     - name: Push Docker image to Amazon ECR
-      run: docker push 471112778737.dkr.ecr.ap-south-1.amazonaws.com/my_repository:$TIMESTAMP
+      run: docker push 471112778737.dkr.ecr.ap-south-1.amazonaws.com/my_repository:${{ env.TIMESTAMP }}
