@@ -21,7 +21,7 @@ jobs:
         TIMESTAMP: $(date +%Y%m%d%H%M%S) # Generate timestamp
       run: |
         docker build . -t ecr_user/my_repository:latest
-        echo "::set-output name=image_tag::ecr_user/my_repository:${TIMESTAMP}"
+        echo "::set-output name=image_tag::ecr_user/my_repository:${{ env.TIMESTAMP }}"
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v2
@@ -38,7 +38,7 @@ jobs:
         TIMESTAMP: $(date +%Y%m%d%H%M%S) # Use the same timestamp for tagging
       run: docker tag ecr_user/my_repository:latest 471112778737.dkr.ecr.ap-south-1.amazonaws.com/my_repository:${{ env.TIMESTAMP }}
     
-    - name: Push Docker im- name: Replace timestamp in deployment file
+    - name: Push Docker image
       run: sed -i "s|471112778737\.dkr\.ecr\.ap-south-1\.amazonaws\.com/my_repository:latest|471112778737\.dkr\.ecr\.ap-south-1\.amazonaws\.com/my_repository:${{ steps.build_docker_image.outputs.timestamp }}|" deployment.yaml
 
     - name: Commit changes
