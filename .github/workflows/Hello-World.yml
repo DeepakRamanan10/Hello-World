@@ -44,7 +44,7 @@ jobs:
     - name: Push Docker image to Amazon ECR
       env:
         TIMESTAMP: $(date +%Y%m%d%H%M%S) # Use the same timestamp for tagging
-      run: docker push 471112778737.dkr.ecr.ap-south-1.amazonaws.com/my_repository:${{ env.TIMESTAMP }}"
+      run: docker push 471112778737.dkr.ecr.ap-south-1.amazonaws.com/my_repository:${{ env.TIMESTAMP }}" 
       
     - name: Commit changes
       run: |
