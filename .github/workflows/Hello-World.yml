@@ -37,10 +37,15 @@ jobs:
       env:
         TIMESTAMP: $(date +%Y%m%d%H%M%S) # Use the same timestamp for tagging
       run: docker tag ecr_user/my_repository:latest 471112778737.dkr.ecr.ap-south-1.amazonaws.com/my_repository:${{ env.TIMESTAMP }}
-    
-    - name: Push Docker image
-      run: sed -i "s|471112778737\.dkr\.ecr\.ap-south-1\.amazonaws\.com/my_repository:latest|471112778737\.dkr\.ecr\.ap-south-1\.amazonaws\.com/my_repository:${{ steps.build_docker_image.outputs.timestamp }}|" deployment.yaml
 
+    - name: Replace timestamp in deployment file
+      run: sed -i "s|471112778737\.dkr\.ecr\.ap-south-1\.amazonaws\.com/my_repository:latest|471112778737\.dkr\.ecr\.ap-south-1\.amazonaws\.com/my_repository:${{ steps.build_docker_image.outputs.timestamp }}|" deployment.yaml
+    
+    - name: Push Docker image to Amazon ECR
+      env:
+        TIMESTAMP: $(date +%Y%m%d%H%M%S) # Use the same timestamp for tagging
+      run: docker push 471112778737.dkr.ecr.ap-south-1.amazonaws.com/my_repository:${{ env.TIMESTAMP }}"
+      
     - name: Commit changes
       run: |
         git config --local user.email "deepakramanan10@gmail.com"
@@ -48,8 +53,6 @@ jobs:
         git add deployment.yaml
         git commit -m "Update deployment with latest image tag"
         git push
-      env:
-        TIMESTAMP: $(date +%Y%m%d%H%M%S) # Use the same timestamp for tagging
-      run: docker push 471112778737.dkr.ecr.ap-south-1.amazonaws.com/my_repository:${{ env.TIMESTAMP }}
+      
 
      
